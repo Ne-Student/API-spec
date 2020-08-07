@@ -1,0 +1,29 @@
+{
+  "name": "ne-student-spec",
+  "version": "0.1.0",
+  "repository": "https://github.com/Ne-Student/API-spec.git",
+  "author": "Yaroslav <q.link0.p@gmail.com>",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "redoc": "redoc-cli",
+    "schema": "typescript-json-schema",
+    "examples": "node scripts/genExamples.js",
+    "build": "sh scripts/build.sh",
+    "serve": "redoc-cli serve --watch ne-student-api.yml",
+    "lint": "spectral lint ne-student-api.yml",
+    "mock": "prism mock ne-student-api.yml"
+  },
+  "devDependencies": {
+    "@stoplight/prism-cli": "^3.3.6",
+    "@stoplight/spectral": "^5.4.0",
+    "@types/json-stable-stringify": "^1.0.32",
+    "@types/node": "^14.0.26",
+    "redoc-cli": "^0.9.9"
+  },
+  "dependencies": {
+    "json-stable-stringify": "^1.0.1",
+    "typescript": "^3.9.7",
+    "typescript-json-schema": "^0.42.0"
+  }
+}
