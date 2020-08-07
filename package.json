@@ -9,7 +9,7 @@
     "redoc": "redoc-cli",
     "schema": "typescript-json-schema",
     "examples": "node scripts/genExamples.js",
-    "build": "sh scripts/build.sh",
+    "build": "node scripts/build.sh",
     "serve": "redoc-cli serve --watch ne-student-api.yml",
     "lint": "spectral lint ne-student-api.yml",
     "mock": "prism mock ne-student-api.yml"
