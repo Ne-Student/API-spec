@@ -1,6 +1,6 @@
 # OpenAPI specification of the Ne Student API
 
-_Implementation can be found at [https://github.com/Ne-Student/API](https://github.com/Ne-Student/API)_
+_Implementation can be found at [https://github.com/Ne-Student/ne-student-api](https://github.com/Ne-Student/ne-student-api)_
 
 ### Yep, this is a Node.js repo
 I generate json schema and examples from the TypeScript files. I like it a lot better that way + added type-safety is nice. And yes, that means that you can't just plug `ne-student-api.yml` file into your favourite OpenAPI tools right away. Those examples and schemas must be first generated from ts files.
