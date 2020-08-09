@@ -75,7 +75,13 @@ paths:
               example:
                 $ref: 'out/examples.json#/loginSuccess'
         '401':
-          $ref: '#/components/responses/unauthorized'
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: 'out/errors.json#/definitions/SingleInvalidCredentials'
+              example:
+                $ref: 'out/examples.json#/invalidCredentials'
         '500':
           $ref: '#/components/responses/internalError'
 
@@ -115,11 +121,17 @@ paths:
           content:
             application/json:
               schema:
-                $ref: 'out/errors.json#/definitions/SingleUserDoesNotExist'
+                $ref: 'out/errors.json#/definitions/Register401'
               examples:
                 User does not exist:
                   value:
                     $ref: 'out/examples.json#/registerFailure'
+                Login contains invalid sequence of characters:
+                  value:
+                    $ref: 'out/examples.json#/invalidLogin'
+                Password contains invalid sequence of characters:
+                  value:
+                    $ref: 'out/examples.json#/invalidPassword'
         '500':
           $ref: '#/components/responses/internalError'
 

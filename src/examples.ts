@@ -12,6 +12,8 @@ import {
     InvalidToken,
     TokenExpired,
     TokenRevoked,
+    InvalidLogin,
+    InvalidPassword,
 } from "./errors"
 import { Payload, Lesson } from "./common"
 
@@ -185,4 +187,28 @@ export const lessonList: Payload<Lesson[]> = {
 
 export const emptyList: Payload<[]> = {
     payload: []
+}
+
+export const invalidCredentials: Error<InvalidCredentials> = {
+    error: {
+        type: "invalid_credentials"
+    }
+}
+
+export const loginAlreadyPresent: Error<LoginAlreadyPresent> = {
+    error: {
+        type: "login_already_present"
+    }
+}
+
+export const invalidPassword: Error<InvalidPassword> = {
+    error: {
+        type: "invalid_password"
+    }
+}
+
+export const invalidLogin: Error<InvalidLogin> = {
+    error: {
+        type: "invalid_login"
+    }
 }

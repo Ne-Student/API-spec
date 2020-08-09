@@ -24,6 +24,8 @@ export type NoTokenPresent = { type: "no_token_present" }
 export type InvalidToken = { type: "invalid_token" }
 export type TokenExpired = { type: "token_expired" }
 export type TokenRevoked = { type: "token_revoked" }
+export type InvalidLogin = { type: "invalid_login" }
+export type InvalidPassword = { type: "invalid_password" }
 
 export type Unauthorized = NoTokenPresent | InvalidToken | TokenExpired | TokenRevoked
 
@@ -39,15 +41,17 @@ export type APIError =
     | LessonDoesNotExist
     | NoReadAccess
     | NoWriteAccess
+    | InvalidLogin
+    | InvalidPassword
 // | NoAdminPermissions
 
 export type Error<E extends APIError> = { error: E }
 
 export type SingleInternalError = Error<InternaError>
-export type SingleUserDoesNotExist = Error<InternaError>
-export type SingleInvalidCredentials = Error<InternaError>
-export type SingleInvalidToken = Error<InternaError>
-export type SingleLoginAlreadyPresent = Error<InternaError>
+export type SingleUserDoesNotExist = Error<UserDoesNotExist>
+export type SingleInvalidCredentials = Error<InvalidCredentials>
+export type SingleInvalidToken = Error<InvalidToken>
+export type SingleLoginAlreadyPresent = Error<LoginAlreadyPresent>
 export type SingleLessonDoesNotExist = Error<LessonDoesNotExist>
 export type SingleNoReadAccess<Entity extends EntityType = EntityType> = Error<NoReadAccess<Entity>>
 export type SingleNoWriteAccess<Entity extends EntityType = EntityType> = Error<NoWriteAccess<Entity>>
@@ -60,3 +64,7 @@ export type SingleLessonNoWriteAccess = SingleNoWriteAccess<"lesson">
 // export type SingleLessonNoAdminPermissions = SingleNoAdminPermissions<"lesson">
 
 export type SingleUnauthorized = Error<Unauthorized>
+
+// Route specific errors
+// /register 401
+export type Register401 = Error<LoginAlreadyPresent | InvalidLogin | InvalidPassword>
