@@ -68,3 +68,6 @@ export type SingleUnauthorized = Error<Unauthorized>
 // Route specific errors
 // /register 401
 export type Register401 = Error<LoginAlreadyPresent | InvalidLogin | InvalidPassword>
+
+// No Write Access in real-world
+export type NoWriteAccess403 = Error<NoReadAccess | NoWriteAccess>

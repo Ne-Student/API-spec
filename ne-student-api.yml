@@ -379,10 +379,15 @@ components:
             $ref: 'out/examples.json#/noLessonReadAccess'
 
     noLessonWriteAccess:
-      description: No write access
+      description: No read/write access
       content:
         application/json:
           schema:
-            $ref: 'out/errors.json#/definitions/SingleLessonNoWriteAccess'
-          example:
-            $ref: 'out/examples.json#/noLessonWriteAccess'
+            $ref: 'out/errors.json#/definitions/NoWriteAccess403'
+          examples:
+            No write access:
+              value:
+                $ref: 'out/examples.json#/noLessonWriteAccess'
+            No read access:
+              value:
+                $ref: 'out/examples.json#/noLessonReadAccess'
