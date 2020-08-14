@@ -5,6 +5,7 @@ export type InternaError = {
     message?: string
 }
 export type UserDoesNotExist = { type: "user_does_not_exist" }
+export type TeacherDoesNotExist = { type: "teacher_does_not_exist" }
 export type InvalidCredentials = { type: "invalid_credentials" }
 export type LoginAlreadyPresent = { type: "login_already_present" }
 export type LessonDoesNotExist = { type: "lesson_does_not_exist" }
@@ -32,6 +33,7 @@ export type Unauthorized = NoTokenPresent | InvalidToken | TokenExpired | TokenR
 export type APIError =
     | InternaError
     | UserDoesNotExist
+    | TeacherDoesNotExist
     | InvalidCredentials
     | InvalidToken
     | TokenExpired
@@ -66,6 +68,8 @@ export type SingleLessonNoWriteAccess = SingleNoWriteAccess<"lesson">
 export type SingleTeacherNoReadAccess = SingleNoReadAccess<"teacher">
 export type SingleTeacherNoWriteAccess = SingleNoWriteAccess<"teacher">
 
+export type SingleTeacherDoesNotExist = Error<TeacherDoesNotExist>
+
 export type SingleUnauthorized = Error<Unauthorized>
 
 // Route specific errors
@@ -73,5 +77,7 @@ export type SingleUnauthorized = Error<Unauthorized>
 export type Register401 = Error<LoginAlreadyPresent | InvalidLogin | InvalidPassword>
 
 // No Write Access in real-world
-export type NoWriteAccess403 = Error<NoReadAccess | NoWriteAccess>
+export type NoWriteAccess403<Entity extends EntityType> = Error<NoReadAccess<Entity> | NoWriteAccess<Entity>>
 
+export type LessonNoWriteAccess403 = NoWriteAccess403<"lesson">
+export type TeacherNoWriteAccess403 = NoWriteAccess403<"teacher">

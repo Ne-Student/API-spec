@@ -44,7 +44,7 @@ x-tagGroups:
   - name: Access types
     tags:
       - retrieval
-      - manipmulation
+      - manipulation
 servers:
   - url: 'http://localhost:8800'
 paths:
@@ -175,14 +175,13 @@ paths:
           $ref: '#/components/responses/unauthorized'
         '500':
           $ref: '#/components/responses/internalError'
-    
 
   /lesson/{id}:
     parameters:
       - name: id
         required: true
         in: path
-        example: "a7262da1-33ed-448c-8b7d-97263d0974f7"
+        example: a7262da1-33ed-448c-8b7d-97263d0974f7
         schema:
           $ref: 'out/common.json#/definitions/LessonID'
       - name: Authorization
@@ -361,31 +360,37 @@ paths:
         required: true
         schema:
           $ref: 'out/common.json#/definitions/TeacherID'
-        example:
-          $ref: 'out/examples.json#/getTeacher/payload/id'
+        example: 6b7fda92-581f-4236-8127-cc39e58185a1
+      - name: Authorization 
+        in: header
+        required: true
+        schema: { type: string, format: bearer }
 
     get:
       tags:
         - teacher
         - retrieval
-      summary: Get teacher by id
+      summary: Fetch a single teacher
+      description: Retrieve a single teacher object by its id
       operationId: get-teacher
       security:
         - bearerAuth: [ ]
 
       responses:
-        '201':
-          description: Created
+        '200':
+          description: Ok
           content:
             application/json:
               schema: 
                 $ref: 'out/responses.json#/definitions/GetTeacher'
               example:
                 $ref: 'out/examples.json#/getTeacher'
-
+        '404':
+          $ref: '#/components/responses/teacherNotFound'
+        '403':
+          $ref: '#/components/responses/noTeacherReadAccess'
         '401':
           $ref: '#/components/responses/unauthorized'
-
         '500':
           $ref: '#/components/responses/internalError'
 
@@ -428,15 +433,6 @@ components:
               value:
                 $ref: 'out/examples.json#/internalError'
 
-    lessonNotFound:
-      description: Lesson not found
-      content:
-        application/json:
-          schema:
-            $ref: 'out/errors.json#/definitions/SingleLessonDoesNotExist'
-          example:
-            $ref: 'out/examples.json#/lessonNotFound'
-
     unauthorized:
       description: Access token is missing, invalid or expired
       content:
@@ -456,6 +452,16 @@ components:
             Token revoked:
               value:
                 $ref: 'out/examples.json#/tokenRevoked'
+    
+    # Lesson specific components
+    lessonNotFound:
+      description: Lesson not found
+      content:
+        application/json:
+          schema:
+            $ref: 'out/errors.json#/definitions/SingleLessonDoesNotExist'
+          example:
+            $ref: 'out/examples.json#/lessonNotFound'
 
     noLessonReadAccess:
       description: No read access
@@ -480,6 +486,16 @@ components:
               value:
                 $ref: 'out/examples.json#/noLessonReadAccess'
 
+    # Teacher specific components
+    teacherNotFound:
+      description: Teacher not found
+      content:
+        application/json:
+          schema:
+            $ref: 'out/errors.json#/definitions/SingleTeacherDoesNotExist'
+          example:
+            $ref: 'out/examples.json#/teacherNotFound'
+
     noTeacherReadAccess:
       description: No read access
       content:
@@ -502,7 +518,3 @@ components:
             No read access:
               value:
                 $ref: 'out/examples.json#/noTeacherReadAccess'
-
-                
-
-            
