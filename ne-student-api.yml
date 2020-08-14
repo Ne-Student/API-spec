@@ -193,10 +193,12 @@ paths:
       tags:
         - lesson
         - manipulation
-      summary: Create new Lesson
+      summary: Modify existing Lesson
       description: |
-        Create new Lesson. User will be automatically assigned read-write permissions
-        to the newly created lesson.
+        Modifies already present lesson, found by id, by setting appropriate fields to the new values.
+        If field is not present in request body, that field in entity is left unchanged.
+        If field contains appropriate value, that field in entity is set to the new value.
+        If field is set to null, that field will be deleted from the entity.
       operationId: patch-lesson
       security:
         - bearerAuth: [ ]
