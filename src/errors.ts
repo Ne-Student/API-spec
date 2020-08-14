@@ -63,6 +63,9 @@ export type SingleLessonNoReadAccess = SingleNoReadAccess<"lesson">
 export type SingleLessonNoWriteAccess = SingleNoWriteAccess<"lesson">
 // export type SingleLessonNoAdminPermissions = SingleNoAdminPermissions<"lesson">
 
+export type SingleTeacherNoReadAccess = SingleNoReadAccess<"teacher">
+export type SingleTeacherNoWriteAccess = SingleNoWriteAccess<"teacher">
+
 export type SingleUnauthorized = Error<Unauthorized>
 
 // Route specific errors
@@ -71,3 +74,4 @@ export type Register401 = Error<LoginAlreadyPresent | InvalidLogin | InvalidPass
 
 // No Write Access in real-world
 export type NoWriteAccess403 = Error<NoReadAccess | NoWriteAccess>
+

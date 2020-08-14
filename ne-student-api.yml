@@ -44,7 +44,7 @@ x-tagGroups:
   - name: Access types
     tags:
       - retrieval
-      - manipulation
+      - manipmulation
 servers:
   - url: 'http://localhost:8800'
 paths:
@@ -135,18 +135,12 @@ paths:
         '500':
           $ref: '#/components/responses/internalError'
 
-  /lesson/{id}:
+  /lesson:
     parameters:
-      - name: id
-        required: true
-        in: path
-        example: "a7262da1-33ed-448c-8b7d-97263d0974f7"
-        schema:
-          $ref: 'out/common.json#/definitions/LessonID'
       - name: Authorization
         in: header
         required: true
-        schema: { type: "string", format: bearer }
+        schema: { type: string, format: bearer }
 
     put:
       tags:
@@ -182,6 +176,20 @@ paths:
         '500':
           $ref: '#/components/responses/internalError'
     
+
+  /lesson/{id}:
+    parameters:
+      - name: id
+        required: true
+        in: path
+        example: "a7262da1-33ed-448c-8b7d-97263d0974f7"
+        schema:
+          $ref: 'out/common.json#/definitions/LessonID'
+      - name: Authorization
+        in: header
+        required: true
+        schema: { type: string, format: bearer }
+
     patch:
       tags:
         - lesson
@@ -269,6 +277,10 @@ paths:
         schema: { type: string }
         description: Date at which lessons are scheduled. Formatted as DD/MM/YYYY
         example: 01/16/2001
+      - name: Authorization
+        in: header
+        required: true
+        schema: { type: string, format: bearer }
     
     get:
       tags:
@@ -298,6 +310,82 @@ paths:
                     $ref: 'out/examples.json#/emptyList'
         '401':
           $ref: '#/components/responses/unauthorized'
+        '500':
+          $ref: '#/components/responses/internalError'
+
+  /teacher:
+    parameters:
+      - name: Authorization 
+        in: header
+        required: true
+        schema: { type: string, format: bearer }
+
+    put:
+      tags:
+        - teacher
+        - manipulation
+      summary: Create a new teacher
+      description: Create a new teacher with first name and optional last name
+      operationId: put-teacher
+      security:
+        - bearerAuth: [ ]
+
+      requestBody:
+        content:
+          application/json:
+            schema: 
+              $ref: 'out/requests.json#/definitions/AddTeacher'
+            example:
+              $ref: 'out/examples.json#/addTeacher'
+
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema: 
+                $ref: 'out/responses.json#/definitions/GetTeacher'
+              example:
+                $ref: 'out/examples.json#/getTeacher'
+
+        '401':
+          $ref: '#/components/responses/unauthorized'
+
+        '500':
+          $ref: '#/components/responses/internalError'
+
+  /teacher/{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          $ref: 'out/common.json#/definitions/TeacherID'
+        example:
+          $ref: 'out/examples.json#/getTeacher/payload/id'
+
+    get:
+      tags:
+        - teacher
+        - retrieval
+      summary: Get teacher by id
+      operationId: get-teacher
+      security:
+        - bearerAuth: [ ]
+
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema: 
+                $ref: 'out/responses.json#/definitions/GetTeacher'
+              example:
+                $ref: 'out/examples.json#/getTeacher'
+
+        '401':
+          $ref: '#/components/responses/unauthorized'
+
         '500':
           $ref: '#/components/responses/internalError'
 
@@ -391,3 +479,30 @@ components:
             No read access:
               value:
                 $ref: 'out/examples.json#/noLessonReadAccess'
+
+    noTeacherReadAccess:
+      description: No read access
+      content:
+        application/json:
+          schema:
+            $ref: 'out/errors.json#/definitions/SingleTeacherNoReadAccess'
+          example:
+            $ref: 'out/examples.json#/noTeacherReadAccess'
+
+    noTeacherWriteAccess:
+      description: No read/write access
+      content:
+        application/json:
+          schema:
+            $ref: 'out/errors.json#/definitions/NoWriteAccess403'
+          examples:
+            No write access:
+              value:
+                $ref: 'out/examples.json#/noTeacherWriteAccess'
+            No read access:
+              value:
+                $ref: 'out/examples.json#/noTeacherReadAccess'
+
+                
+
+            

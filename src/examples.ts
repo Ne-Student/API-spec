@@ -1,5 +1,5 @@
-import { Login as LoginRequest, Register as RegisterRequest, AddLesson } from "./requests"
-import { Login as LoginReponse, Register as RegisterResponse, GetLesson as GetLessonResponse } from "./responses"
+import { Login as LoginRequest, Register as RegisterRequest, AddLesson, AddTeacher } from "./requests"
+import { Login as LoginReponse, Register as RegisterResponse, GetLesson as GetLessonResponse, GetTeacher } from "./responses"
 import {
     InternaError,
     Error,
@@ -121,6 +121,21 @@ export const noLessonWriteAccess: Error<NoWriteAccess<"lesson">> = {
 //     },
 // }
 
+export const noTeacherReadAccess: Error<NoReadAccess<"teacher">> = {
+    error: {
+        type: "no_read_access",
+        entity_type: "teacher",
+        enriry_id: "a7262da1-33ed-448c-8b7d-97263d0974f7",
+    },
+}
+export const noTeacherWriteAccess: Error<NoWriteAccess<"teacher">> = {
+    error: {
+        type: "no_write_access",
+        entity_type: "teacher",
+        enriry_id: "a7262da1-33ed-448c-8b7d-97263d0974f7",
+    },
+}
+
 export const noTokenPresent: Error<NoTokenPresent> = {
     error: {
         type: "no_token_present",
@@ -210,5 +225,19 @@ export const invalidPassword: Error<InvalidPassword> = {
 export const invalidLogin: Error<InvalidLogin> = {
     error: {
         type: "invalid_login"
+    }
+}
+
+export const addTeacher: AddTeacher = {
+    first_name: "Alexander",
+    last_name: "Kalujnii"
+}
+
+export const getTeacher: GetTeacher = {
+    payload: {
+        first_name: "Alexander",
+        last_name: "Kalujnii",
+        id: "6b7fda92-581f-4236-8127-cc39e58185a1",
+        userID: "bda8704f-b53b-49e8-8917-69bd0c00fc89"
     }
 }
