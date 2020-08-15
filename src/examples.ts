@@ -91,12 +91,12 @@ export const noLessonWriteAccess = errorOf<NoWriteAccess<"lesson">>("no_write_ac
 
 export const noTeacherReadAccess = errorOf<NoReadAccess<"teacher">>("no_read_access", {
     entity_type: "teacher",
-    enriry_id: "a7262da1-33ed-448c-8b7d-97263d0974f7",
+    enriry_id: "6b7fda92-581f-4236-8127-cc39e58185a1",
 })
 
 export const noTeacherWriteAccess = errorOf<NoWriteAccess<"teacher">>("no_write_access", {
     entity_type: "teacher",
-    enriry_id: "a7262da1-33ed-448c-8b7d-97263d0974f7",
+    enriry_id: "6b7fda92-581f-4236-8127-cc39e58185a1",
 })
 
 export const noTokenPresent = errorOf<NoTokenPresent>("no_token_present")
@@ -161,7 +161,7 @@ export const getTeacher: GetTeacher = payloadOf({
     first_name: "Alexander",
     last_name: "Kalujnii",
     id: "6b7fda92-581f-4236-8127-cc39e58185a1",
-    userID: "bda8704f-b53b-49e8-8917-69bd0c00fc89"
+    user_id: "bda8704f-b53b-49e8-8917-69bd0c00fc89"
 })
 
 export const teacherNotFound = errorOf<TeacherDoesNotExist>("teacher_does_not_exist")

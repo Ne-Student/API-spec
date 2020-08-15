@@ -6,9 +6,11 @@ info:
   contact:
     name: Yaroslav (API developer)
     email: q.link0.p@gmail.com
+
 externalDocs:
   url: https://github.com/Malien/ne-student-api
   description: An API repo, containing both spec, and it's implementation
+
 tags:
   - name: auth
     x-displayName: Authentication API
@@ -31,6 +33,7 @@ tags:
   - name: manipulation
     x-displayName: Data manipulation
     description: APIs that allow changing and deleting data resources
+
 x-tagGroups:
   - name: Genral
     tags:
@@ -45,8 +48,10 @@ x-tagGroups:
     tags:
       - retrieval
       - manipulation
+
 servers:
   - url: 'http://localhost:8800'
+
 paths:
 
   /auth/login:
@@ -58,6 +63,7 @@ paths:
       operationId: auth-login
 
       requestBody:
+        required: true
         content:
           application/json:
             schema:
@@ -93,6 +99,7 @@ paths:
       description: Create a new user
       operationId: auth-register
       requestBody:
+        required: true
         content:
           application/json:
             schema:
@@ -204,6 +211,7 @@ paths:
         - bearerAuth: [ ]
       
       requestBody:
+        required: true
         content:
           application/json:
             schema:
@@ -332,6 +340,7 @@ paths:
         - bearerAuth: [ ]
 
       requestBody:
+        required: true
         content:
           application/json:
             schema: 

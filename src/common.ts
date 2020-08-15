@@ -92,9 +92,6 @@ export type Repeat = {
 }
 
 export interface Lesson {
-    /**
-     * @format uuid
-     */
     id: LessonID
     title: string
     repeats: Repeat[]
@@ -109,34 +106,19 @@ export interface Lesson {
 }
 
 export interface Teacher extends NamedEntity {
-    /**
-     * @format uuid
-     */
     id: TeacherID
-    /**
-     * @format uuid
-     */
-    userID?: UserID
+    user_id?: UserID
     // lessons: LessonID[] // not MVP
 }
 
 export interface Task {
-    /**
-     * @format uuid
-     */
     id: TaskID
     name: string
     description?: string
-    /**
-     * @format uuid
-     */
     lesson?: LessonID
     // teacher?: TeacherID // not MVP
 }
 
 export interface User extends NamedEntity {
-    /**
-     * @format uuid
-     */
     id: UserID
 }
