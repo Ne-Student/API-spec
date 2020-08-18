@@ -4,6 +4,11 @@ export type InternaError = {
     type: "internal_error"
     message?: string
 }
+export type BadRequest = { 
+    type: "bad_request",
+    message?: string, 
+    in: "path" | "query" | "header" | "body" 
+}
 export type UserDoesNotExist = { type: "user_does_not_exist" }
 export type TeacherDoesNotExist = { type: "teacher_does_not_exist" }
 export type InvalidCredentials = { type: "invalid_credentials" }
@@ -45,6 +50,7 @@ export type APIError =
     | NoWriteAccess
     | InvalidLogin
     | InvalidPassword
+    | BadRequest
 // | NoAdminPermissions
 
 export type Error<E extends APIError> = { error: E }

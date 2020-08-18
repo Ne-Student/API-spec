@@ -73,33 +73,12 @@ export type ISOTime = string
  */
 export type ISODateTime = string
 
-/**
- * @type integer
- * @minimum 0
- * @maximum 24
- */
-export type Hour = number
-/**
- * @type integer
- * @minimum 0
- * @maximum 60
- */
-export type Minute = number
-
-export type Time = {
-    hour: Hour
-    minute: Minute
-}
-
-export type SingleLesson = {
-    type: "single"
-    at: ISODateTime
-}
+export type SingleLesson = ISODateTime
 
 export type Repeat = {
     /**
      * @description Frequency at which lessons are to be repeated counted in days. 
-     * If lesson were to be repeated every wheek, the value would be 7
+     * If lesson were to be repeated every week, the value would be 7
      * @type integer
      * @minimum 1
      */

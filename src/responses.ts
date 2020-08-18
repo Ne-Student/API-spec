@@ -15,3 +15,5 @@ export type NewLesson = GetLesson
 export type GetLessonList = Payload<Lesson[]>
 
 export type GetTeacher =  Payload<Teacher>
+
+export type GetTeacherList = Payload<Teacher[]>
