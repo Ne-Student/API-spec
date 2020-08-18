@@ -61,40 +61,39 @@ export type WeekDay =
     | Sunday
 
 /**
- * @type integer
- * @minimum 0
- * @maximum 24
+ * @format date
  */
-export type Hour = number
+export type ISODate = string
 /**
- * @type integer
- * @minimum 0
- * @maximum 60
+ * @format time
  */
-export type Minute = number
+export type ISOTime = string
+/**
+ * @format date-time
+ */
+export type ISODateTime = string
 
-export type Time = {
-    hour: Hour
-    minute: Minute
-}
-
-export type Weekly = 1
-export type BiWeekly = 2
-export type RepetitionFrequency = Weekly | BiWeekly
+export type SingleLesson = ISODateTime
 
 export type Repeat = {
     /**
-     * @description Frequency at which lessons are to be repeated. 1 means every week, 2 means biweekly
+     * @description Frequency at which lessons are to be repeated counted in days. 
+     * If lesson were to be repeated every week, the value would be 7
+     * @type integer
+     * @minimum 1
      */
-    every: RepetitionFrequency
+    every: number
     day: WeekDay
-    time: Time
+    time: ISOTime
+    start_date: ISODate
+    end_date?: ISODate
 }
 
 export interface Lesson {
     id: LessonID
     title: string
     repeats: Repeat[]
+    singles: SingleLesson[]
     /**
      * @description Array of Teacher IDs
      * @abstract if you have read access to the lesson, you get read access to the teachers assigned to it

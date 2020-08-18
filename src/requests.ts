@@ -1,4 +1,4 @@
-import { NamedEntity, Repeat, TaskID, LessonID, TeacherID, UserID, EntityID, EntityType } from "./common"
+import { NamedEntity, Repeat as RepeatedOccurrence, TaskID, LessonID, TeacherID, UserID, EntityID, EntityType, SingleLesson as SingleOccurrence } from "./common"
 
 export interface Login {
     login: string
@@ -23,7 +23,8 @@ export interface AddTask {
 
 export interface AddLesson {
     title: string
-    repeats: Repeat[]
+    repeats?: RepeatedOccurrence[]
+    singles?: SingleOccurrence[]
     description?: string
 }
 
@@ -43,7 +44,14 @@ export interface AddPermission {
 }
 
 export type UpdateTask = AddTask
-export type UpdateLesson = AddLesson
+
+export interface UpdateLesson {
+    title?: string
+    repeats?: RepeatedOccurrence[]
+    singles?: SingleOccurrence[]
+    description?: string | null
+}
+
 export type UpdateTeacher = AddTeacher
 
 export interface UpdateMe extends NamedEntity {}

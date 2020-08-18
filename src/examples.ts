@@ -1,5 +1,5 @@
 import { Login as LoginRequest, Register as RegisterRequest, AddLesson, AddTeacher } from "./requests"
-import { Login as LoginReponse, Register as RegisterResponse, GetLesson as GetLessonResponse, GetTeacher } from "./responses"
+import { Login as LoginReponse, Register as RegisterResponse, GetLesson as GetLessonResponse, GetTeacher, GetLessonList, GetTeacherList } from "./responses"
 import {
     InternaError,
     Error,
@@ -16,8 +16,9 @@ import {
     InvalidPassword,
     APIError,
     TeacherDoesNotExist,
+    BadRequest,
 } from "./errors"
-import { Payload, Lesson } from "./common"
+import { Payload, Lesson, Teacher } from "./common"
 
 const payloadOf = <T>(payload: T) => ({ payload })
 const errorOf = <E extends APIError>(type: E["type"], rest?: Omit<E, "type">) => ({ error: { type, ...rest } })
@@ -33,6 +34,16 @@ export const loginSuccess: LoginReponse = payloadOf({
 })
 
 export const loginFailure = errorOf<InvalidCredentials>("invalid_credentials")
+
+export const badRequestBody = errorOf<BadRequest>("bad_request", {
+    message: "expected `,` or `}` at line 4 column 2",
+    in: "body"
+})
+
+export const badRequestPath = errorOf<BadRequest>("bad_request", {
+    message: "invalid length: expected one of [36, 32], found 12",
+    in: "path"
+})
 
 export const register: RegisterRequest = {
     first_name: "John",
@@ -60,19 +71,20 @@ export const getLesson: GetLessonResponse = payloadOf({
         {
             day: 1,
             every: 1,
-            time: {
-                hour: 12,
-                minute: 0,
-            },
+            start_date: "2020-08-17",
+            time: "13:00:00+00:00"
         },
         {
             day: 3,
             every: 2,
-            time: {
-                hour: 15,
-                minute: 10,
-            },
+            start_date: "2020-08-17",
+            time: "15:10:00+00:00"
         },
+    ],
+    singles: [
+        "2020-08-17 15:10",
+        "2020-09-21 11:30",
+        "2020-08-11 14:00"
     ],
     teachers: ["cdf033af-e625-4fa4-b7e0-08ad096ba6dd", "291d3192-3cbf-4749-ae3f-f4834f220fda"],
 })
@@ -109,24 +121,25 @@ export const addLesson: AddLesson = {
     repeats: [
         {
             day: 4,
-            every: 2,
-            time: {
-                hour: 10,
-                minute: 30,
-            },
+            every: 14,
+            start_date: "2020-08-17",
+            time: "13:00:00+00:00"
         },
         {
             day: 6,
-            every: 1,
-            time: {
-                hour: 8,
-                minute: 0,
-            },
+            every: 7,
+            start_date: "2020-08-17",
+            time: "15:10:00+00:00"
         },
     ],
+    singles: [
+        "2020-08-17 15:10",
+        "2020-09-21 11:30",
+        "2020-08-11 14:00"
+    ]
 }
 
-export const lessonList = payloadOf<Lesson[]>([
+export const lessonList: GetLessonList = payloadOf([
     getLesson.payload,
     {
         id: "cb571a0e-d057-4e4e-a592-7d6343875a7e",
@@ -135,11 +148,14 @@ export const lessonList = payloadOf<Lesson[]>([
             {
                 day: 2,
                 every: 1,
-                time: {
-                    hour: 13,
-                    minute: 10,
-                },
+                start_date: "2020-08-17",
+                time: "15:10:00+00:00"
             },
+        ],
+        singles: [
+            "2020-08-17 15:10",
+            "2020-09-21 11:30",
+            "2020-08-11 14:00"
         ],
         teachers: ["47477195-1de3-4a67-8e8d-1060a44593d5"],
     },
@@ -164,4 +180,22 @@ export const getTeacher: GetTeacher = payloadOf({
     user_id: "bda8704f-b53b-49e8-8917-69bd0c00fc89"
 })
 
+export const teacherList: GetTeacherList = payloadOf([
+    getTeacher.payload,
+    {
+        first_name: "Yaroslav",
+        last_name: "Volinko",
+        id: "d380fa45-64b8-4fe1-b625-2ca03e7cb2ee",
+        userID: "7a6d9baa-093d-4715-bf1c-08d75c406302"
+    }
+])
+
 export const teacherNotFound = errorOf<TeacherDoesNotExist>("teacher_does_not_exist")
+
+export const updateLesson = payloadOf({
+    description: "null",
+    singles: [
+        "2020-08-17 15:10",
+        "2020-11-25 12:30"
+    ]
+})
