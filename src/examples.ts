@@ -1,24 +1,29 @@
-import { Login as LoginRequest, Register as RegisterRequest, AddLesson, AddTeacher } from "./requests"
-import { Login as LoginReponse, Register as RegisterResponse, GetLesson as GetLessonResponse, GetTeacher, GetLessonList, GetTeacherList } from "./responses"
 import {
+    APIError,
+    BadRequest,
     InternaError,
-    Error,
     InvalidCredentials,
-    LoginAlreadyPresent,
-    LessonDoesNotExist,
-    NoReadAccess,
-    NoWriteAccess,
-    NoTokenPresent,
-    InvalidToken,
-    TokenExpired,
-    TokenRevoked,
     InvalidLogin,
     InvalidPassword,
-    APIError,
+    InvalidToken,
+    LessonDoesNotExist,
+    LoginAlreadyPresent,
+    NoReadAccess,
+    NoTokenPresent,
+    NoWriteAccess,
     TeacherDoesNotExist,
-    BadRequest,
+    TokenExpired,
+    TokenRevoked,
 } from "./errors"
-import { Payload, Lesson, Teacher } from "./common"
+import { AddLesson, AddTeacher, Login as LoginRequest, Register as RegisterRequest } from "./requests"
+import {
+    GetLesson as GetLessonResponse,
+    GetLessonList,
+    GetTeacher,
+    GetTeacherList,
+    Login as LoginReponse,
+    Register as RegisterResponse,
+} from "./responses"
 
 const payloadOf = <T>(payload: T) => ({ payload })
 const errorOf = <E extends APIError>(type: E["type"], rest?: Omit<E, "type">) => ({ error: { type, ...rest } })
@@ -37,12 +42,12 @@ export const loginFailure = errorOf<InvalidCredentials>("invalid_credentials")
 
 export const badRequestBody = errorOf<BadRequest>("bad_request", {
     message: "expected `,` or `}` at line 4 column 2",
-    in: "body"
+    in: "body",
 })
 
 export const badRequestPath = errorOf<BadRequest>("bad_request", {
     message: "invalid length: expected one of [36, 32], found 12",
-    in: "path"
+    in: "path",
 })
 
 export const register: RegisterRequest = {
@@ -72,20 +77,16 @@ export const getLesson: GetLessonResponse = payloadOf({
             day: 1,
             every: 1,
             start_date: "2020-08-17",
-            time: "13:00:00+00:00"
+            time: "13:00:00+00:00",
         },
         {
             day: 3,
             every: 2,
             start_date: "2020-08-17",
-            time: "15:10:00+00:00"
+            time: "15:10:00+00:00",
         },
     ],
-    singles: [
-        "2020-08-17 15:10",
-        "2020-09-21 11:30",
-        "2020-08-11 14:00"
-    ],
+    singles: ["2020-08-17T15:10", "2020-09-21T11:30", "2020-08-11T14:00"],
     teachers: ["cdf033af-e625-4fa4-b7e0-08ad096ba6dd", "291d3192-3cbf-4749-ae3f-f4834f220fda"],
 })
 
@@ -123,20 +124,16 @@ export const addLesson: AddLesson = {
             day: 4,
             every: 14,
             start_date: "2020-08-17",
-            time: "13:00:00+00:00"
+            time: "13:00:00+00:00",
         },
         {
             day: 6,
             every: 7,
             start_date: "2020-08-17",
-            time: "15:10:00+00:00"
+            time: "15:10:00+00:00",
         },
     ],
-    singles: [
-        "2020-08-17 15:10",
-        "2020-09-21 11:30",
-        "2020-08-11 14:00"
-    ]
+    singles: ["2020-08-17T15:10", "2020-09-21T11:30", "2020-08-11T14:00"],
 }
 
 export const lessonList: GetLessonList = payloadOf([
@@ -149,14 +146,10 @@ export const lessonList: GetLessonList = payloadOf([
                 day: 2,
                 every: 1,
                 start_date: "2020-08-17",
-                time: "15:10:00+00:00"
+                time: "15:10:00+00:00",
             },
         ],
-        singles: [
-            "2020-08-17 15:10",
-            "2020-09-21 11:30",
-            "2020-08-11 14:00"
-        ],
+        singles: ["2020-08-17 15:10", "2020-09-21 11:30", "2020-08-11 14:00"],
         teachers: ["47477195-1de3-4a67-8e8d-1060a44593d5"],
     },
 ])
@@ -170,14 +163,14 @@ export const invalidLogin = errorOf<InvalidLogin>("invalid_login")
 
 export const addTeacher: AddTeacher = {
     first_name: "Alexander",
-    last_name: "Kalujnii"
+    last_name: "Kalujnii",
 }
 
 export const getTeacher: GetTeacher = payloadOf({
     first_name: "Alexander",
     last_name: "Kalujnii",
     id: "6b7fda92-581f-4236-8127-cc39e58185a1",
-    user_id: "bda8704f-b53b-49e8-8917-69bd0c00fc89"
+    user_id: "bda8704f-b53b-49e8-8917-69bd0c00fc89",
 })
 
 export const teacherList: GetTeacherList = payloadOf([
@@ -186,16 +179,13 @@ export const teacherList: GetTeacherList = payloadOf([
         first_name: "Yaroslav",
         last_name: "Volinko",
         id: "d380fa45-64b8-4fe1-b625-2ca03e7cb2ee",
-        userID: "7a6d9baa-093d-4715-bf1c-08d75c406302"
-    }
+        userID: "7a6d9baa-093d-4715-bf1c-08d75c406302",
+    },
 ])
 
 export const teacherNotFound = errorOf<TeacherDoesNotExist>("teacher_does_not_exist")
 
 export const updateLesson = payloadOf({
     description: "null",
-    singles: [
-        "2020-08-17 15:10",
-        "2020-11-25 12:30"
-    ]
+    singles: ["2020-08-17T15:10", "2020-11-25T12:30"],
 })
