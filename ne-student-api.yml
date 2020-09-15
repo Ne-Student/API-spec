@@ -20,22 +20,22 @@ tags:
     description: Manage access to different entities (lessons, teachers, tasks)
   - name: lesson
     x-displayName: Lesson
-    description: Everyhting related to lesson retrieval and manipulation
+    description: Everything related to lesson retrieval and manipulation
   - name: teacher
     x-displayName: Teacher
-    description: Everyhting related to teacher retrieval and manipulation
+    description: Everything related to teacher retrieval and manipulation
   - name: task
     x-displayName: Task
-    description: Everyhting related to task retrieval and manipulation
+    description: Everything related to task retrieval and manipulation
   - name: retrieval
     x-displayName: Data fetching
-    description: APIs that allow to fetch different enteties
+    description: APIs that allow to fetch different entities
   - name: manipulation
     x-displayName: Data manipulation
     description: APIs that allow changing and deleting data resources
 
 x-tagGroups:
-  - name: Genral
+  - name: General
     tags:
       - auth
       - permissions
@@ -50,13 +50,12 @@ x-tagGroups:
       - manipulation
 
 servers:
-  - url: 'http://localhost:8800'
+  - url: "http://localhost:8800"
 
 paths:
-
   /auth/login:
     post:
-      tags: 
+      tags:
         - auth
       summary: Login user via login and password
       description: Generate access token from login credentials
@@ -67,35 +66,35 @@ paths:
         content:
           application/json:
             schema:
-              $ref: 'out/requests.json#/definitions/Login'
+              $ref: "out/requests.json#/definitions/Login"
             example:
-              $ref: 'out/examples.json#/login'
+              $ref: "out/examples.json#/login"
 
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
               schema:
-                $ref: 'out/responses.json#/definitions/Login'
+                $ref: "out/responses.json#/definitions/Login"
               example:
-                $ref: 'out/examples.json#/loginSuccess'
-        '400':
-          $ref: '#/components/responses/badRequest'
-        '401':
+                $ref: "out/examples.json#/loginSuccess"
+        "400":
+          $ref: "#/components/responses/badRequest"
+        "401":
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: 'out/errors.json#/definitions/SingleInvalidCredentials'
+                $ref: "out/errors.json#/definitions/SingleInvalidCredentials"
               example:
-                $ref: 'out/examples.json#/invalidCredentials'
-        '500':
-          $ref: '#/components/responses/internalError'
+                $ref: "out/examples.json#/invalidCredentials"
+        "500":
+          $ref: "#/components/responses/internalError"
 
   /auth/register:
     post:
-      tags: 
+      tags:
         - auth
       summary: Register a new user
       description: Create a new user
@@ -105,46 +104,46 @@ paths:
         content:
           application/json:
             schema:
-              $ref: 'out/requests.json#/definitions/Register'
+              $ref: "out/requests.json#/definitions/Register"
             examples:
               Fully specified registration:
                 value:
-                  $ref: 'out/examples.json#/register'
+                  $ref: "out/examples.json#/register"
               Without last name:
                 value:
-                  $ref: 'out/examples.json#/registerWithoutName'
+                  $ref: "out/examples.json#/registerWithoutName"
 
       responses:
-        '200':
+        "200":
           description: Ok
           content:
             application/json:
               schema:
-                $ref: 'out/responses.json#/definitions/Register'
+                $ref: "out/responses.json#/definitions/Register"
               examples:
                 Success:
                   value:
-                    $ref: 'out/examples.json#/registerSuccess'
-        '400':
-          $ref: '#/components/responses/badRequest'
-        '401':
+                    $ref: "out/examples.json#/registerSuccess"
+        "400":
+          $ref: "#/components/responses/badRequest"
+        "401":
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: 'out/errors.json#/definitions/Register401'
+                $ref: "out/errors.json#/definitions/Register401"
               examples:
                 User does not exist:
                   value:
-                    $ref: 'out/examples.json#/registerFailure'
+                    $ref: "out/examples.json#/registerFailure"
                 Login contains invalid sequence of characters:
                   value:
-                    $ref: 'out/examples.json#/invalidLogin'
+                    $ref: "out/examples.json#/invalidLogin"
                 Password contains invalid sequence of characters:
                   value:
-                    $ref: 'out/examples.json#/invalidPassword'
-        '500':
-          $ref: '#/components/responses/internalError'
+                    $ref: "out/examples.json#/invalidPassword"
+        "500":
+          $ref: "#/components/responses/internalError"
 
   /lesson:
     parameters:
@@ -163,31 +162,31 @@ paths:
         to the newly created lesson.
       operationId: put-lesson
       security:
-        - bearerAuth: [ ]
-      
+        - bearerAuth: []
+
       requestBody:
         content:
           application/json:
             schema:
-              $ref: 'out/requests.json#/definitions/AddLesson'
+              $ref: "out/requests.json#/definitions/AddLesson"
             example:
-              $ref: 'out/examples.json#/addLesson'
-      
+              $ref: "out/examples.json#/addLesson"
+
       responses:
-        '201':
+        "201":
           description: Created
           content:
             application/json:
-              schema: 
-                $ref: 'out/responses.json#/definitions/NewLesson'
+              schema:
+                $ref: "out/responses.json#/definitions/NewLesson"
               example:
-                $ref: 'out/examples.json#/getLesson'
-        '400':
-          $ref: '#/components/responses/badRequest'
-        '401':
-          $ref: '#/components/responses/unauthorized'
-        '500':
-          $ref: '#/components/responses/internalError'
+                $ref: "out/examples.json#/getLesson"
+        "400":
+          $ref: "#/components/responses/badRequest"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "500":
+          $ref: "#/components/responses/internalError"
 
   /lesson/{id}:
     parameters:
@@ -196,7 +195,7 @@ paths:
         in: path
         example: a7262da1-33ed-448c-8b7d-97263d0974f7
         schema:
-          $ref: 'out/common.json#/definitions/LessonID'
+          $ref: "out/common.json#/definitions/LessonID"
       - name: Authorization
         in: header
         required: true
@@ -214,29 +213,29 @@ paths:
         If field is set to null, that field will be deleted from the entity.
       operationId: patch-lesson
       security:
-        - bearerAuth: [ ]
-      
+        - bearerAuth: []
+
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: 'out/requests.json#/definitions/UpdateLesson'
+              $ref: "out/requests.json#/definitions/UpdateLesson"
             example:
-              $ref: 'out/examples.json#/updateLesson'
-      
+              $ref: "out/examples.json#/updateLesson"
+
       responses:
-        '204':
+        "204":
           description: Updated (No content)
-        '400':
-          $ref: '#/components/responses/badRequest'
-        '401':
-          $ref: '#/components/responses/unauthorized'
-        '403':
-          $ref: '#/components/responses/noLessonWriteAccess'
-        '500':
-          $ref: '#/components/responses/internalError'
-    
+        "400":
+          $ref: "#/components/responses/badRequest"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "403":
+          $ref: "#/components/responses/noLessonWriteAccess"
+        "500":
+          $ref: "#/components/responses/internalError"
+
     get:
       tags:
         - retrieval
@@ -245,28 +244,28 @@ paths:
       description: Retrieve a lesson by its ID
       operationId: get-lesson
       security:
-        - bearerAuth: [ ]
+        - bearerAuth: []
 
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
               schema:
-                $ref: 'out/responses.json#/definitions/GetLesson'
+                $ref: "out/responses.json#/definitions/GetLesson"
               example:
-                $ref: 'out/examples.json#/getLesson'
-        '400':
-          $ref: '#/components/responses/badRequest'
-        '401':
-          $ref: '#/components/responses/unauthorized'
-        '404':
-          $ref: '#/components/responses/lessonNotFound'
-        '403':
-          $ref: '#/components/responses/noLessonReadAccess'
-        '500':
-          $ref: '#/components/responses/internalError'
-    
+                $ref: "out/examples.json#/getLesson"
+        "400":
+          $ref: "#/components/responses/badRequest"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "404":
+          $ref: "#/components/responses/lessonNotFound"
+        "403":
+          $ref: "#/components/responses/noLessonReadAccess"
+        "500":
+          $ref: "#/components/responses/internalError"
+
     delete:
       tags:
         - manipulation
@@ -275,34 +274,34 @@ paths:
       description: Delete a single lesson by its ID
       operationId: delete-lesson
       security:
-        - bearerAuth: [ ]
+        - bearerAuth: []
 
       responses:
-        '204':
+        "204":
           description: Deleted (No content)
-        '400':
-          $ref: '#/components/responses/badRequest'
-        '401':
-          $ref: '#/components/responses/unauthorized'
-        '403':
-          $ref: '#/components/responses/noLessonWriteAccess'
-        '404':
-          $ref: '#/components/responses/lessonNotFound'
-        '500':
-          $ref: '#/components/responses/internalError'
-      
+        "400":
+          $ref: "#/components/responses/badRequest"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "403":
+          $ref: "#/components/responses/noLessonWriteAccess"
+        "404":
+          $ref: "#/components/responses/lessonNotFound"
+        "500":
+          $ref: "#/components/responses/internalError"
+
   /lessons:
     parameters:
       - name: date
         in: query
         schema: { type: string }
-        description: Date at which lessons are scheduled. Formatted as DD/MM/YYYY
-        example: 01/16/2001
+        description: Date at which lessons are scheduled. Formatted as ISO-8601 date
+        example: 01-16-2001
       - name: Authorization
         in: header
         required: true
         schema: { type: string, format: bearer }
-    
+
     get:
       tags:
         - retrieval
@@ -313,32 +312,32 @@ paths:
         If user doesn't have permissions to read certain lessons, they won't be returned by the API
       operationId: get-lessons
       security:
-        - bearerAuth: [ ]
+        - bearerAuth: []
 
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
               schema:
-                $ref: 'out/responses.json#/definitions/GetLessonList'
+                $ref: "out/responses.json#/definitions/GetLessonList"
               examples:
                 Populated list:
                   value:
-                    $ref: 'out/examples.json#/lessonList'
+                    $ref: "out/examples.json#/lessonList"
                 No lessons found:
                   value:
-                    $ref: 'out/examples.json#/emptyList'
-        '400':
-          $ref: '#/components/responses/badRequest'
-        '401':
-          $ref: '#/components/responses/unauthorized'
-        '500':
-          $ref: '#/components/responses/internalError'
+                    $ref: "out/examples.json#/emptyList"
+        "400":
+          $ref: "#/components/responses/badRequest"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "500":
+          $ref: "#/components/responses/internalError"
 
   /teacher:
     parameters:
-      - name: Authorization 
+      - name: Authorization
         in: header
         required: true
         schema: { type: string, format: bearer }
@@ -351,32 +350,32 @@ paths:
       description: Create a new teacher with first name and optional last name
       operationId: put-teacher
       security:
-        - bearerAuth: [ ]
+        - bearerAuth: []
 
       requestBody:
         required: true
         content:
           application/json:
-            schema: 
-              $ref: 'out/requests.json#/definitions/AddTeacher'
+            schema:
+              $ref: "out/requests.json#/definitions/AddTeacher"
             example:
-              $ref: 'out/examples.json#/addTeacher'
+              $ref: "out/examples.json#/addTeacher"
 
       responses:
-        '201':
+        "201":
           description: Created
           content:
             application/json:
-              schema: 
-                $ref: 'out/responses.json#/definitions/GetTeacher'
+              schema:
+                $ref: "out/responses.json#/definitions/GetTeacher"
               example:
-                $ref: 'out/examples.json#/getTeacher'
-        '400':
-          $ref: '#/components/responses/badRequest'
-        '401':
-          $ref: '#/components/responses/unauthorized'
-        '500':
-          $ref: '#/components/responses/internalError'
+                $ref: "out/examples.json#/getTeacher"
+        "400":
+          $ref: "#/components/responses/badRequest"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "500":
+          $ref: "#/components/responses/internalError"
 
   /teacher/{id}:
     parameters:
@@ -384,9 +383,9 @@ paths:
         in: path
         required: true
         schema:
-          $ref: 'out/common.json#/definitions/TeacherID'
+          $ref: "out/common.json#/definitions/TeacherID"
         example: 6b7fda92-581f-4236-8127-cc39e58185a1
-      - name: Authorization 
+      - name: Authorization
         in: header
         required: true
         schema: { type: string, format: bearer }
@@ -399,31 +398,91 @@ paths:
       description: Retrieve a single teacher object by its id
       operationId: get-teacher
       security:
-        - bearerAuth: [ ]
+        - bearerAuth: []
 
       responses:
-        '200':
+        "200":
           description: Ok
           content:
             application/json:
-              schema: 
-                $ref: 'out/responses.json#/definitions/GetTeacher'
+              schema:
+                $ref: "out/responses.json#/definitions/GetTeacher"
               example:
-                $ref: 'out/examples.json#/getTeacher'
-        '400':
-          $ref: '#/components/responses/badRequest'
-        '404':
-          $ref: '#/components/responses/teacherNotFound'
-        '403':
-          $ref: '#/components/responses/noTeacherReadAccess'
-        '401':
-          $ref: '#/components/responses/unauthorized'
-        '500':
-          $ref: '#/components/responses/internalError'
+                $ref: "out/examples.json#/getTeacher"
+        "400":
+          $ref: "#/components/responses/badRequest"
+        "404":
+          $ref: "#/components/responses/teacherNotFound"
+        "403":
+          $ref: "#/components/responses/noTeacherReadAccess"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "500":
+          $ref: "#/components/responses/internalError"
+
+    patch:
+      tags:
+        - teacher
+        - manipulation
+      summary: Modify already existing teacher
+      description: |
+        Apply set of patches to the teacher resource. Fields with a new values will replace old ones.
+        Fields with nulls will delete old values.
+      operationId: patch-teacher
+      security:
+        - bearerAuth: []
+
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "out/requests.json#/definitions/UpdateTeacher"
+            example:
+              $ref: "out/examples.json#/updateTeacher"
+
+      responses:
+        "204":
+          description: Updated (No content)
+        "400":
+          $ref: "#/components/responses/badRequest"
+        "404":
+          $ref: "#/components/responses/teacherNotFound"
+        "403":
+          $ref: "#/components/responses/noTeacherWriteAccess"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "500":
+          $ref: "#/components/responses/internalError"
+
+    delete:
+      tags:
+        - teacher
+        - manipulation
+      summary: Delete a teacher
+      description: Delete a single teacher by its ID
+      operationId: delete-teacher
+      security:
+        - bearerAuth: []
+      
+      responses:
+        "204":
+          description: Deleted (No content)
+        "400":
+          $ref: "#/components/responses/badRequest"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "403":
+          $ref: "#/components/responses/noTeacherWriteAccess"
+        "404":
+          $ref: "#/components/responses/teacherNotFound"
+        "500":
+          $ref: "#/components/responses/internalError"
+      
 
   /teachers:
-    parameters: 
-      - name: Authorization 
+    parameters:
+      - name: Authorization
         in: header
         required: true
         schema: { type: string, format: bearer }
@@ -436,23 +495,23 @@ paths:
       description: Retrieve all teachers that user has access to
       operationId: get-teachers
       security:
-        - bearerAuth: [ ]
+        - bearerAuth: []
 
       responses:
-        '200':
+        "200":
           description: Ok
           content:
             application/json:
-              schema: 
-                $ref: 'out/responses.json#/definitions/GetTeacherList'
+              schema:
+                $ref: "out/responses.json#/definitions/GetTeacherList"
               example:
-                $ref: 'out/examples.json#/teacherList'
-        '400':
-          $ref: '#/components/responses/badRequest'
-        '401':
-          $ref: '#/components/responses/unauthorized'
-        '500':
-          $ref: '#/components/responses/internalError'
+                $ref: "out/examples.json#/teacherList"
+        "400":
+          $ref: "#/components/responses/badRequest"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "500":
+          $ref: "#/components/responses/internalError"
 
 components:
   securitySchemes:
@@ -475,90 +534,90 @@ components:
       content:
         application/json:
           schema:
-            $ref: 'out/errors.json#/definitions/BadRequest'
+            $ref: "out/errors.json#/definitions/SingleBadRequest"
           examples:
             Invalid Body:
               value:
-                $ref: 'out/examples.json#/badRequestBody'
+                $ref: "out/examples.json#/badRequestBody"
 
             Invalid Path:
               value:
-                $ref: 'out/examples.json#/badRequestPath'
-        
+                $ref: "out/examples.json#/badRequestPath"
+
     invalidCredentials:
       description: Unauthorized
       content:
         application/json:
           schema:
-            $ref: 'out/errors.json#/definitions/SingleInvalidCredentials'
+            $ref: "out/errors.json#/definitions/SingleInvalidCredentials"
           examples:
             Invalid Credentials:
               value:
-                $ref: 'out/examples.json#/loginFailure'
+                $ref: "out/examples.json#/loginFailure"
 
     internalError:
       description: Internal Server Error
       content:
         application/json:
           schema:
-            $ref: 'out/errors.json#/definitions/SingleInternalError'
+            $ref: "out/errors.json#/definitions/SingleInternalError"
           examples:
             Internal Server Error:
               value:
-                $ref: 'out/examples.json#/internalError'
+                $ref: "out/examples.json#/internalError"
 
     unauthorized:
       description: Access token is missing, invalid or expired
       content:
         application/json:
-          schema: 
-            $ref: 'out/errors.json#/definitions/SingleUnauthorized'
+          schema:
+            $ref: "out/errors.json#/definitions/SingleUnauthorized"
           examples:
             Token is missing:
               value:
-                $ref: 'out/examples.json#/noTokenPresent'
+                $ref: "out/examples.json#/noTokenPresent"
             Invalid token:
               value:
-                $ref: 'out/examples.json#/invalidToken'
+                $ref: "out/examples.json#/invalidToken"
             Token expired:
               value:
-                $ref: 'out/examples.json#/tokenExpired'
+                $ref: "out/examples.json#/tokenExpired"
             Token revoked:
               value:
-                $ref: 'out/examples.json#/tokenRevoked'
-    
+                $ref: "out/examples.json#/tokenRevoked"
+
     # Lesson specific components
     lessonNotFound:
       description: Lesson not found
       content:
         application/json:
           schema:
-            $ref: 'out/errors.json#/definitions/SingleLessonDoesNotExist'
+            $ref: "out/errors.json#/definitions/SingleLessonDoesNotExist"
           example:
-            $ref: 'out/examples.json#/lessonNotFound'
+            $ref: "out/examples.json#/lessonNotFound"
 
     noLessonReadAccess:
       description: No read access
       content:
         application/json:
           schema:
-            $ref: 'out/errors.json#/definitions/SingleLessonNoReadAccess'
+            $ref: "out/errors.json#/definitions/SingleLessonNoReadAccess"
           example:
-            $ref: 'out/examples.json#/noLessonReadAccess'
+            $ref: "out/examples.json#/noLessonReadAccess"
 
     noLessonWriteAccess:
       description: No read/write access
       content:
         application/json:
           schema:
-            $ref: 'out/errors.json#/definitions/NoWriteAccess403'
+            $ref: "out/errors.json#/definitions/LessonNoWriteAccess403"
           examples:
             No write access:
               value:
-                $ref: 'out/examples.json#/noLessonWriteAccess'
+                $ref: "out/examples.json#/noLessonWriteAccess"
             No read access:
               value:
-                $ref: 'out/examples.json#/noLessonReadAccess'
+                $ref: "out/examples.json#/noLessonReadAccess"
 
     # Teacher specific components
     teacherNotFound:
@@ -566,29 +625,29 @@ components:
       content:
         application/json:
           schema:
-            $ref: 'out/errors.json#/definitions/SingleTeacherDoesNotExist'
+            $ref: "out/errors.json#/definitions/SingleTeacherDoesNotExist"
           example:
-            $ref: 'out/examples.json#/teacherNotFound'
+            $ref: "out/examples.json#/teacherNotFound"
 
     noTeacherReadAccess:
       description: No read access
       content:
         application/json:
           schema:
-            $ref: 'out/errors.json#/definitions/SingleTeacherNoReadAccess'
+            $ref: "out/errors.json#/definitions/SingleTeacherNoReadAccess"
           example:
-            $ref: 'out/examples.json#/noTeacherReadAccess'
+            $ref: "out/examples.json#/noTeacherReadAccess"
 
     noTeacherWriteAccess:
       description: No read/write access
       content:
         application/json:
           schema:
-            $ref: 'out/errors.json#/definitions/NoWriteAccess403'
+            $ref: "out/errors.json#/definitions/TeacherNoWriteAccess403"
           examples:
             No write access:
               value:
-                $ref: 'out/examples.json#/noTeacherWriteAccess'
+                $ref: "out/examples.json#/noTeacherWriteAccess"
             No read access:
               value:
-                $ref: 'out/examples.json#/noTeacherReadAccess'
+                $ref: "out/examples.json#/noTeacherReadAccess"

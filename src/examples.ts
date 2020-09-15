@@ -1,7 +1,7 @@
 import {
     APIError,
     BadRequest,
-    InternaError,
+    InternalError,
     InvalidCredentials,
     InvalidLogin,
     InvalidPassword,
@@ -15,13 +15,13 @@ import {
     TokenExpired,
     TokenRevoked,
 } from "./errors"
-import { AddLesson, AddTeacher, Login as LoginRequest, Register as RegisterRequest } from "./requests"
+import { AddLesson, AddTeacher, Login as LoginRequest, Register as RegisterRequest, UpdateTeacher } from "./requests"
 import {
     GetLesson as GetLessonResponse,
     GetLessonList,
     GetTeacher,
     GetTeacherList,
-    Login as LoginReponse,
+    Login as LoginResponse,
     Register as RegisterResponse,
 } from "./responses"
 
@@ -30,10 +30,10 @@ const errorOf = <E extends APIError>(type: E["type"], rest?: Omit<E, "type">) =>
 
 export const login: LoginRequest = {
     login: "yarik",
-    password: "LegitPasword",
+    password: "LegitPassword",
 }
 
-export const loginSuccess: LoginReponse = payloadOf({
+export const loginSuccess: LoginResponse = payloadOf({
     access_token:
         "eyJhbGciOiJIUzI1NiJ9.eyJpZCI6ImI2OWJkODdlLWQwNDQtMTFlYS05NWJlLTE0MTA5ZmQ2NzRkMSJ9.xYJaZTwhvncTGCLJFc2_xCnA9AYegn88VW3akEQnp18",
 })
@@ -67,7 +67,7 @@ export const registerSuccess: RegisterResponse = loginSuccess
 
 export const registerFailure = errorOf<LoginAlreadyPresent>("login_already_present")
 
-export const internalError = errorOf<InternaError>("internal_error")
+export const internalError = errorOf<InternalError>("internal_error")
 
 export const getLesson: GetLessonResponse = payloadOf({
     id: "a7262da1-33ed-448c-8b7d-97263d0974f7",
@@ -94,22 +94,22 @@ export const lessonNotFound = errorOf<LessonDoesNotExist>("lesson_does_not_exist
 
 export const noLessonReadAccess = errorOf<NoReadAccess<"lesson">>("no_read_access", {
     entity_type: "lesson",
-    enriry_id: "a7262da1-33ed-448c-8b7d-97263d0974f7",
+    entity_id: "a7262da1-33ed-448c-8b7d-97263d0974f7",
 })
 
 export const noLessonWriteAccess = errorOf<NoWriteAccess<"lesson">>("no_write_access", {
     entity_type: "lesson",
-    enriry_id: "a7262da1-33ed-448c-8b7d-97263d0974f7",
+    entity_id: "a7262da1-33ed-448c-8b7d-97263d0974f7",
 })
 
 export const noTeacherReadAccess = errorOf<NoReadAccess<"teacher">>("no_read_access", {
     entity_type: "teacher",
-    enriry_id: "6b7fda92-581f-4236-8127-cc39e58185a1",
+    entity_id: "6b7fda92-581f-4236-8127-cc39e58185a1",
 })
 
 export const noTeacherWriteAccess = errorOf<NoWriteAccess<"teacher">>("no_write_access", {
     entity_type: "teacher",
-    enriry_id: "6b7fda92-581f-4236-8127-cc39e58185a1",
+    entity_id: "6b7fda92-581f-4236-8127-cc39e58185a1",
 })
 
 export const noTokenPresent = errorOf<NoTokenPresent>("no_token_present")
@@ -189,3 +189,8 @@ export const updateLesson = payloadOf({
     description: "null",
     singles: ["2020-08-17T15:10", "2020-11-25T12:30"],
 })
+
+export const updateTeacher: UpdateTeacher = {
+    first_name: "Daniel",
+    last_name: null
+}

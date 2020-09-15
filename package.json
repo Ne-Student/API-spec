@@ -7,7 +7,7 @@
   "private": true,
   "scripts": {
     "redoc": "redoc-cli",
-    "schema": "typescript-json-schema",
+    "schema": "./node_modules/@studa/typescript-json-schema/bin/typescript-json-schema",
     "examples": "node scripts/genExamples.js",
     "build": "node scripts/build.js",
     "serve": "redoc-cli serve --watch ne-student-api.yml",
@@ -22,6 +22,7 @@
     "redoc-cli": "^0.9.9"
   },
   "dependencies": {
+    "@studa/typescript-json-schema": "^0.43.0",
     "json-stable-stringify": "^1.0.1",
     "typescript": "^3.9.7",
     "typescript-json-schema": "^0.42.0"

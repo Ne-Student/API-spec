@@ -52,7 +52,10 @@ export interface UpdateLesson {
     description?: string | null
 }
 
-export type UpdateTeacher = AddTeacher
+export interface UpdateTeacher {
+    first_name?: string
+    last_name?: string | null
+}
 
 export interface UpdateMe extends NamedEntity {}
 
@@ -66,5 +69,5 @@ export interface AssignTeacherLesson {
     lesson_id: LessonID
 }
 
-export type DeassignTaskLesson = AssignTaskLesson
-export type DeassignTeacherLesson = AssignTeacherLesson
+export type DeAssignTaskLesson = AssignTaskLesson
+export type DeAssignTeacherLesson = AssignTeacherLesson

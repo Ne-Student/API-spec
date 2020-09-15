@@ -13,10 +13,10 @@ const processHandler = (error, stdout, stderr) => {
 }
 
 commands = [
-    "yarn schema src/requests.ts \"*\" -o out/requests.json --strictNullChechs --required",
-    "yarn schema src/responses.ts \"*\" -o out/responses.json --strictNullChechs --required",
-    "yarn schema src/errors.ts \"*\" -o out/errors.json --strictNullChechs --required",
-    "yarn schema src/common.ts \"*\" -o out/common.json --strictNullChechs --required",
+    "yarn schema src/requests.ts \"*\" -o out/requests.json --strictNullChecks --required --openapiFormat",
+    "yarn schema src/responses.ts \"*\" -o out/responses.json --strictNullChecks --required --openapiFormat",
+    "yarn schema src/errors.ts \"*\" -o out/errors.json --strictNullChecks --required --openapiFormat",
+    "yarn schema src/common.ts \"*\" -o out/common.json --strictNullChecks --required --openapiFormat",
     "yarn examples src/examples.ts"
 ];
 

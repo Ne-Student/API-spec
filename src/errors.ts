@@ -1,6 +1,6 @@
 import { EntityType, IDOf } from "./common"
 
-export type InternaError = {
+export type InternalError = {
     type: "internal_error"
     message?: string
 }
@@ -19,7 +19,7 @@ type NoAccess<Entity extends EntityType> = {
     /**
      * @format uuid
      */
-    enriry_id: IDOf<Entity>
+    entity_id: IDOf<Entity>
 }
 export type NoReadAccess<Entity extends EntityType = EntityType> = NoAccess<Entity> & { type: "no_read_access" }
 export type NoWriteAccess<Entity extends EntityType = EntityType> = NoAccess<Entity> & { type: "no_write_access" }
@@ -36,7 +36,7 @@ export type InvalidPassword = { type: "invalid_password" }
 export type Unauthorized = NoTokenPresent | InvalidToken | TokenExpired | TokenRevoked
 
 export type APIError =
-    | InternaError
+    | InternalError
     | UserDoesNotExist
     | TeacherDoesNotExist
     | InvalidCredentials
@@ -55,7 +55,7 @@ export type APIError =
 
 export type Error<E extends APIError> = { error: E }
 
-export type SingleInternalError = Error<InternaError>
+export type SingleInternalError = Error<InternalError>
 export type SingleUserDoesNotExist = Error<UserDoesNotExist>
 export type SingleInvalidCredentials = Error<InvalidCredentials>
 export type SingleInvalidToken = Error<InvalidToken>
@@ -75,6 +75,8 @@ export type SingleTeacherNoReadAccess = SingleNoReadAccess<"teacher">
 export type SingleTeacherNoWriteAccess = SingleNoWriteAccess<"teacher">
 
 export type SingleTeacherDoesNotExist = Error<TeacherDoesNotExist>
+
+export type SingleBadRequest = Error<BadRequest>
 
 export type SingleUnauthorized = Error<Unauthorized>
 
