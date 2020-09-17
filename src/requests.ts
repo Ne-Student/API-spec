@@ -1,4 +1,4 @@
-import { NamedEntity, Repeat as RepeatedOccurrence, TaskID, LessonID, TeacherID, UserID, EntityID, EntityType, SingleLesson as SingleOccurrence } from "./common"
+import { NamedEntity, Repeat as RepeatedOccurrence, TaskID, LessonID, TeacherID, UserID, EntityID, EntityType, SingleOccurrence as SingleOccurrence } from "./common"
 
 export interface Login {
     login: string
@@ -40,7 +40,7 @@ export interface AddPermission {
     /**
      * @format uuid
      */
-    user_id: UserID
+    account_id: UserID
 }
 
 export type UpdateTask = AddTask

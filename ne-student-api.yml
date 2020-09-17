@@ -369,7 +369,7 @@ paths:
               schema:
                 $ref: "out/responses.json#/definitions/GetTeacher"
               example:
-                $ref: "out/examples.json#/getTeacher"
+                $ref: "out/examples.json#/addedTeacher"
         "400":
           $ref: "#/components/responses/badRequest"
         "401":

@@ -73,7 +73,7 @@ export type ISOTime = string
  */
 export type ISODateTime = string
 
-export type SingleLesson = ISODateTime
+export type SingleOccurrence = ISODateTime
 
 export type Repeat = {
     /**
@@ -93,7 +93,7 @@ export interface Lesson {
     id: LessonID
     title: string
     repeats: Repeat[]
-    singles: SingleLesson[]
+    singles: SingleOccurrence[]
     /**
      * @description Array of Teacher IDs
      * @abstract if you have read access to the lesson, you get read access to the teachers assigned to it
@@ -106,7 +106,7 @@ export interface Lesson {
 
 export interface Teacher extends NamedEntity {
     id: TeacherID
-    user_id?: UserID
+    associated_account_id?: UserID
     // lessons: LessonID[] // not MVP
 }
 

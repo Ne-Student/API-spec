@@ -1,3 +1,4 @@
+import { Lesson, Teacher } from "./common"
 import {
     APIError,
     BadRequest,
@@ -15,7 +16,7 @@ import {
     TokenExpired,
     TokenRevoked,
 } from "./errors"
-import { AddLesson, AddTeacher, Login as LoginRequest, Register as RegisterRequest, UpdateTeacher } from "./requests"
+import { AddLesson, AddTeacher, Login as LoginRequest, Register as RegisterRequest, UpdateLesson, UpdateTeacher } from "./requests"
 import {
     GetLesson as GetLessonResponse,
     GetLessonList,
@@ -69,7 +70,7 @@ export const registerFailure = errorOf<LoginAlreadyPresent>("login_already_prese
 
 export const internalError = errorOf<InternalError>("internal_error")
 
-export const getLesson: GetLessonResponse = payloadOf({
+export const getLesson: GetLessonResponse = payloadOf<Lesson>({
     id: "a7262da1-33ed-448c-8b7d-97263d0974f7",
     title: "Math",
     repeats: [
@@ -136,7 +137,7 @@ export const addLesson: AddLesson = {
     singles: ["2020-08-17T15:10", "2020-09-21T11:30", "2020-08-11T14:00"],
 }
 
-export const lessonList: GetLessonList = payloadOf([
+export const lessonList: GetLessonList = payloadOf<Lesson[]>([
     getLesson.payload,
     {
         id: "cb571a0e-d057-4e4e-a592-7d6343875a7e",
@@ -166,29 +167,35 @@ export const addTeacher: AddTeacher = {
     last_name: "Kalujnii",
 }
 
-export const getTeacher: GetTeacher = payloadOf({
+export const addedTeacher: Teacher = {
+    id: "6b7fda92-581f-4236-8127-cc39e58185a1",
+    first_name: "Alexander",
+    last_name: "Kalujnii"
+}
+
+export const getTeacher: GetTeacher = payloadOf<Teacher>({
     first_name: "Alexander",
     last_name: "Kalujnii",
     id: "6b7fda92-581f-4236-8127-cc39e58185a1",
-    user_id: "bda8704f-b53b-49e8-8917-69bd0c00fc89",
+    associated_account_id: "bda8704f-b53b-49e8-8917-69bd0c00fc89",
 })
 
-export const teacherList: GetTeacherList = payloadOf([
+export const teacherList: GetTeacherList = payloadOf<Teacher[]>([
     getTeacher.payload,
     {
         first_name: "Yaroslav",
         last_name: "Volinko",
         id: "d380fa45-64b8-4fe1-b625-2ca03e7cb2ee",
-        userID: "7a6d9baa-093d-4715-bf1c-08d75c406302",
+        associated_account_id: "7a6d9baa-093d-4715-bf1c-08d75c406302",
     },
 ])
 
 export const teacherNotFound = errorOf<TeacherDoesNotExist>("teacher_does_not_exist")
 
-export const updateLesson = payloadOf({
+export const updateLesson: UpdateLesson = {
     description: "null",
     singles: ["2020-08-17T15:10", "2020-11-25T12:30"],
-})
+}
 
 export const updateTeacher: UpdateTeacher = {
     first_name: "Daniel",
