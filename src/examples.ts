@@ -73,21 +73,23 @@ export const internalError = errorOf<InternalError>("internal_error")
 export const getLesson: GetLessonResponse = payloadOf<Lesson>({
     id: "a7262da1-33ed-448c-8b7d-97263d0974f7",
     title: "Math",
-    repeats: [
+    singles: ["2020-08-17T15:10", "2020-09-21T11:30", "2020-08-11T14:00"],
+    daily: [],
+    weekly: [
         {
             day: 1,
             every: 1,
             start_date: "2020-08-17",
-            time: "13:00:00+00:00",
+            at: "13:00:00+00:00",
         },
         {
             day: 3,
             every: 2,
             start_date: "2020-08-17",
-            time: "15:10:00+00:00",
+            at: "15:10:00+00:00",
         },
     ],
-    singles: ["2020-08-17T15:10", "2020-09-21T11:30", "2020-08-11T14:00"],
+    monthly: [],
     teachers: ["cdf033af-e625-4fa4-b7e0-08ad096ba6dd", "291d3192-3cbf-4749-ae3f-f4834f220fda"],
 })
 
@@ -120,18 +122,18 @@ export const tokenRevoked = errorOf<TokenRevoked>("token_revoked")
 
 export const addLesson: AddLesson = {
     title: "Math",
-    repeats: [
+    weekly: [
         {
             day: 4,
             every: 14,
             start_date: "2020-08-17",
-            time: "13:00:00+00:00",
+            at: "13:00:00+00:00",
         },
         {
             day: 6,
             every: 7,
             start_date: "2020-08-17",
-            time: "15:10:00+00:00",
+            at: "15:10:00+00:00",
         },
     ],
     singles: ["2020-08-17T15:10", "2020-09-21T11:30", "2020-08-11T14:00"],
@@ -142,15 +144,17 @@ export const lessonList: GetLessonList = payloadOf<Lesson[]>([
     {
         id: "cb571a0e-d057-4e4e-a592-7d6343875a7e",
         title: "English",
-        repeats: [
+        singles: ["2020-08-17T15:10", "2020-09-21T11:30", "2020-08-11T14:00"],
+        daily: [],
+        weekly: [
             {
                 day: 2,
                 every: 1,
                 start_date: "2020-08-17",
-                time: "15:10:00+00:00",
+                at: "15:10:00+00:00",
             },
         ],
-        singles: ["2020-08-17T15:10", "2020-09-21T11:30", "2020-08-11T14:00"],
+        monthly: [],
         teachers: ["47477195-1de3-4a67-8e8d-1060a44593d5"],
     },
 ])
@@ -167,11 +171,11 @@ export const addTeacher: AddTeacher = {
     last_name: "Kalujnii",
 }
 
-export const addedTeacher: Teacher = {
+export const addedTeacher: GetTeacher = payloadOf<Teacher>({
     id: "6b7fda92-581f-4236-8127-cc39e58185a1",
     first_name: "Alexander",
     last_name: "Kalujnii"
-}
+})
 
 export const getTeacher: GetTeacher = payloadOf<Teacher>({
     first_name: "Alexander",

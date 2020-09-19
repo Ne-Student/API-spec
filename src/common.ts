@@ -75,25 +75,39 @@ export type ISODateTime = string
 
 export type SingleOccurrence = ISODateTime
 
-export type Repeat = {
+export interface Repetition {
+    start_date: ISODate
+    end_date?: ISODate
+}
+
+export interface DailyRepetition extends Repetition {
+    at: ISOTime
+}
+
+export interface WeeklyRepetiotion extends Repetition {
     /**
-     * @description Frequency at which lessons are to be repeated counted in days. 
-     * If lesson were to be repeated every week, the value would be 7
+     * @description Frequency at which lessons are to be repeated counted in weeks. 
+     * If lesson were to be repeated every week, the value would be 1, biweekly - 2
      * @type integer
      * @minimum 1
      */
     every: number
     day: WeekDay
-    time: ISOTime
-    start_date: ISODate
-    end_date?: ISODate
+    at: ISOTime
+}
+
+export interface MonthlyRepetition extends Repetition {
+    every: number
+    at: ISODateTime
 }
 
 export interface Lesson {
     id: LessonID
     title: string
-    repeats: Repeat[]
     singles: SingleOccurrence[]
+    daily: DailyRepetition[]
+    weekly: WeeklyRepetiotion[]
+    monthly: MonthlyRepetition[]
     /**
      * @description Array of Teacher IDs
      * @abstract if you have read access to the lesson, you get read access to the teachers assigned to it
