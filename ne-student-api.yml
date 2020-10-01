@@ -8,8 +8,8 @@ info:
     email: q.link0.p@gmail.com
 
 externalDocs:
-  url: https://github.com/Malien/ne-student-api
-  description: An API repo, containing both spec, and it's implementation
+  url: https://github.com/studaco/API-spec
+  description: An API repo, containing spec
 
 tags:
   - name: auth

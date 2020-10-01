@@ -73,6 +73,9 @@ export type ISOTime = string
  */
 export type ISODateTime = string
 
+/**
+ * @format date-time
+ */
 export type SingleOccurrence = ISODateTime
 
 export interface Repetition {
@@ -84,7 +87,7 @@ export interface DailyRepetition extends Repetition {
     at: ISOTime
 }
 
-export interface WeeklyRepetiotion extends Repetition {
+export interface WeeklyRepetition extends Repetition {
     /**
      * @description Frequency at which lessons are to be repeated counted in weeks. 
      * If lesson were to be repeated every week, the value would be 1, biweekly - 2
@@ -97,6 +100,12 @@ export interface WeeklyRepetiotion extends Repetition {
 }
 
 export interface MonthlyRepetition extends Repetition {
+    /**
+     * @description Frequency at which lessons are to be repeated counted in months. 
+     * If lesson were to be repeated every month, the value would be 1, bimonthly - 2
+     * @type integer
+     * @minimum 1
+     */
     every: number
     at: ISODateTime
 }
@@ -104,9 +113,14 @@ export interface MonthlyRepetition extends Repetition {
 export interface Lesson {
     id: LessonID
     title: string
+    /**
+     * @description Dates at which event will occur
+     * @item.format date-time
+     * @item.type string
+     */
     singles: SingleOccurrence[]
     daily: DailyRepetition[]
-    weekly: WeeklyRepetiotion[]
+    weekly: WeeklyRepetition[]
     monthly: MonthlyRepetition[]
     /**
      * @description Array of Teacher IDs

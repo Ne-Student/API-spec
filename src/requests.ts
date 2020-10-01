@@ -1,4 +1,16 @@
-import { NamedEntity, TaskID, LessonID, TeacherID, UserID, EntityID, EntityType, SingleOccurrence as SingleOccurrence, WeeklyRepetiotion, DailyRepetition, MonthlyRepetition } from "./common"
+import {
+    NamedEntity,
+    TaskID,
+    LessonID,
+    TeacherID,
+    UserID,
+    EntityID,
+    EntityType,
+    SingleOccurrence,
+    WeeklyRepetition,
+    DailyRepetition,
+    MonthlyRepetition,
+} from "./common"
 
 export interface Login {
     login: string
@@ -25,7 +37,7 @@ export interface AddLesson {
     title: string
     singles?: SingleOccurrence[]
     daily?: DailyRepetition[]
-    weekly?: WeeklyRepetiotion[]
+    weekly?: WeeklyRepetition[]
     monthly?: MonthlyRepetition[]
     description?: string
 }
@@ -51,7 +63,7 @@ export interface UpdateLesson {
     title?: string
     singles?: SingleOccurrence[]
     daily?: DailyRepetition[]
-    weekly?: WeeklyRepetiotion[]
+    weekly?: WeeklyRepetition[]
     monthly?: MonthlyRepetition[]
     description?: string | null
 }
