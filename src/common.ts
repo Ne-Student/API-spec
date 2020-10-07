@@ -79,11 +79,21 @@ export type ISODateTime = string
 export type SingleOccurrence = ISODateTime
 
 export interface Repetition {
+    /**
+     * @description The start date, before which repetitions do not occur.
+     *              start_date is inclusive (meaning, if the event is repeated on that day, it is present)
+     */
     start_date: ISODate
+    /**
+     * @description Optional end date, after which repetitions do not occur.
+     *              If end_date is not set, it is assumed that event repetition do not end.
+     *              end_date is inclusive (meaning, if the event is repeated on that day, it is present)
+     */
     end_date?: ISODate
 }
 
 export interface DailyRepetition extends Repetition {
+    /** @description Time of day when lesson takes place */
     at: ISOTime
 }
 
@@ -95,7 +105,19 @@ export interface WeeklyRepetition extends Repetition {
      * @minimum 1
      */
     every: number
+    /**
+     * @description Day of the week when repetition occurs.
+     *              1 - Monday
+     *              2 - Tuesday
+     *              3 - Wednesday
+     *              4 - Thursday
+     *              5 - Friday
+     *              6 - Saturday
+     *              7 - Sunday
+     *              * Sorry North America *
+     */
     day: WeekDay
+    /** @description Time of day when lesson takes place */
     at: ISOTime
 }
 
@@ -107,6 +129,13 @@ export interface MonthlyRepetition extends Repetition {
      * @minimum 1
      */
     every: number
+    /**
+     * @description This is a complicated one. 
+     *              Time part is used to determine when in the day lesson occurs.
+     *              From the date part only the day is used. 
+     *              The day of the month is then used to provide stable day of every months repetition.
+     * @todo Maybe split time of day repetition and day of the month into a separate field
+     */
     at: ISODateTime
 }
 
@@ -114,11 +143,14 @@ export interface Lesson {
     id: LessonID
     title: string
     /**
-     * @description Dates at which event will occur
+     * @description Date-times at which events will occur
      * @item.format date-time
      * @item.type string
      */
     singles: SingleOccurrence[]
+    /**
+     * @description Times where lesson is repeated every single (for now) day.
+     */
     daily: DailyRepetition[]
     weekly: WeeklyRepetition[]
     monthly: MonthlyRepetition[]
