@@ -40,7 +40,7 @@ export type IDOf<Entity extends EntityType> = Entity extends "teacher"
 
 /**
  * @format jwt
- * @pattern [a-zA-Z0-9_=]{18,24}\.[a-zA-Z0-9_=]{48,64}\.[a-zA-Z0-9_=]{36,48}
+ * @pattern [a-zA-Z0-9_=\-]{18,24}\.[a-zA-Z0-9_=\-]{128,256}\.[a-zA-Z0-9_=\-]{36,48}
  */
 export type JWT = string
 

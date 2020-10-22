@@ -16,13 +16,22 @@ import {
     TokenExpired,
     TokenRevoked,
 } from "./errors"
-import { AddLesson, AddTeacher, Login as LoginRequest, Register as RegisterRequest, UpdateLesson, UpdateTeacher } from "./requests"
+import {
+    AddLesson,
+    AddTeacher,
+    Login as LoginRequest,
+    RefreshTokens,
+    Register as RegisterRequest,
+    UpdateLesson,
+    UpdateTeacher,
+} from "./requests"
 import {
     GetLesson as GetLessonResponse,
     GetLessonList,
     GetTeacher,
     GetTeacherList,
     Login as LoginResponse,
+    Refresh,
     Register as RegisterResponse,
 } from "./responses"
 
@@ -36,7 +45,9 @@ export const login: LoginRequest = {
 
 export const loginSuccess: LoginResponse = payloadOf({
     access_token:
-        "eyJhbGciOiJIUzI1NiJ9.eyJpZCI6ImI2OWJkODdlLWQwNDQtMTFlYS05NWJlLTE0MTA5ZmQ2NzRkMSJ9.xYJaZTwhvncTGCLJFc2_xCnA9AYegn88VW3akEQnp18",
+        "eyJhbGciOiJIUzI1NiJ9.eyJhY2NvdW50X2lkIjoiYmM1ZmNlNzQtMTNjOC0xMWViLWI4MjUtMDI0MmFjMTMwMDAzIiwidG9rZW5fb3JpZ2luIjoiN2JhMWI0NmEtNmMzNS00ZGRhLTkxY2QtYTkxYTE0MTA5ODA1IiwiZXhwIjoxNjAzMzA0MTQzLCJpYXQiOjE2MDMzMDM4NDN9.YRYxagpCgIG9nCIfBwppX6kdNXlil6XBOW0lJwYdDe0",
+    refresh_token:
+        "eyJhbGciOiJIUzI1NiJ9.eyJhY2NvdW50X2lkIjoiYmM1ZmNlNzQtMTNjOC0xMWViLWI4MjUtMDI0MmFjMTMwMDAzIiwidG9rZW5faWQiOiI3YmExYjQ2YS02YzM1LTRkZGEtOTFjZC1hOTFhMTQxMDk4MDUiLCJleHAiOjE2MDQ1MTM0NDMsImlhdCI6MTYwMzMwMzg0M30.ymilVkZ9F05L-st8Tco2EOFxiIsDGd3qg6eFL1cSKmA",
 })
 
 export const loginFailure = errorOf<InvalidCredentials>("invalid_credentials")
@@ -67,6 +78,12 @@ export const registerWithoutName: RegisterRequest = {
 export const registerSuccess: RegisterResponse = loginSuccess
 
 export const registerFailure = errorOf<LoginAlreadyPresent>("login_already_present")
+
+export const refresh: RefreshTokens = {
+    refresh_token: "eyJhbGciOiJIUzI1NiJ9.eyJhY2NvdW50X2lkIjoiMTFiNWIzYjgtMDhjMy0xMWViLWE2ZTgtMTQxMDlmZDY3NGQxIiwidG9rZW5faWQiOiIwMDk2NDBkOS1iODdiLTQ1ZmQtODEyZC0zZDI2YmIzYWE5NGYiLCJleHAiOjE2MDQ1MTA1ODEsImlhdCI6MTYwMzMwMDk4MX0.iG2B0lEXCfs8wNwHa5oIMBlneoDJq0yDqDzeNSBo__g"
+}
+
+export const refreshSuccess: Refresh = loginSuccess
 
 export const internalError = errorOf<InternalError>("internal_error")
 
@@ -174,7 +191,7 @@ export const addTeacher: AddTeacher = {
 export const addedTeacher: GetTeacher = payloadOf<Teacher>({
     id: "6b7fda92-581f-4236-8127-cc39e58185a1",
     first_name: "Alexander",
-    last_name: "Kalujnii"
+    last_name: "Kalujnii",
 })
 
 export const getTeacher: GetTeacher = payloadOf<Teacher>({
@@ -203,5 +220,5 @@ export const updateLesson: UpdateLesson = {
 
 export const updateTeacher: UpdateTeacher = {
     first_name: "Daniel",
-    last_name: null
+    last_name: null,
 }

@@ -145,6 +145,62 @@ paths:
         "500":
           $ref: "#/components/responses/internalError"
 
+  /auth/refresh:
+    post:
+      tags:
+        - auth
+      summary: Acquire new access token
+      description: | 
+        Generate access token from login credentials. The old refresh token is then revoked and can't be used again 
+        to preform refresh. Refresh token rotation is performed.
+      operationId: auth-refresh
+
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "out/requests.json#/definitions/RefreshTokens"
+            example:
+              $ref: "out/examples.json#/refresh"
+
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "out/responses.json#/definitions/Refresh"
+              example:
+                $ref: "out/examples.json#/refreshSuccess"
+        "400":
+          $ref: "#/components/responses/badRequest"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "500":
+          $ref: "#/components/responses/internalError"
+    
+  /auth/revoke:
+    post:
+      tags:
+        - auth
+      operationId: auth-revoke
+      security:
+        - bearerAuth: []
+      summary: Revoke refresh token
+      description: |
+        Revoke refresh token associated with the access token used to authenticate to this endpoint.
+
+      responses:
+        "201":
+          description: Revoked (No content)
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "500":
+          $ref: "#/components/responses/internalError"
+      
+
+
   /lesson:
     parameters:
       - name: Authorization
@@ -520,13 +576,29 @@ components:
       scheme: bearer
       bearerFormat: JWT
       description: |
-        Token is returned by the `/login` and `/register` API calls.
+        Auth schema on studa requires the use of two tokens: `access_token` and `refresh_token`.
+        Both tokens are JWTs and contain information to identify user, token expiration date and signature to prove integrity.
+        To determine expiration date it is advised to decode JWT and extract `exp` field which contains UNIX time of expiration.
+
+        Access token is used to authorize user to the resource. Access tokens are short-lived and live only for 5 minutes (subject to change).
+        Access token is linked to the refresh token that was used to acquire it. Revoking access token actually revokes refresh token it is associated with.
+
+        Refresh token is used to acquire new access token once that expires (or about to expire).
+        Refresh tokens live substantially longer: for 14 days (subject to change).
+        Upon requesting new access token API responds with new refresh token. Old refresh token is then revoked.
+
+        Token pair is returned by the `/auth/login` and `/auth/register` API calls.
+
+        When access token is expired or is about to expire call to `/auth/refresh` is required to get new access token.
+
+        Refresh tokens can be revoked by calling an `/auth/revoke` endpoint. Refresh token associated with the access token used to 
+        authenticate used to the endpoint will be revoked immediately, access tokens are then left to expire.
+        When new refresh request is made with the revoked token, `token_revoked` error will be returned by the API.
+
         This token is expected to be present in the `Authorization` http header in form of `Bearer <token>`.
 
-        So if the token returned by the `/login` call is `someLongTokenStringWithNumbersAndWierdSymbols`.
+        So if the access token returned by the `/auth/login` call is `someLongTokenStringWithNumbersAndWierdSymbols`.
         The `Authorization` header should be `Bearer someLongTokenStringWithNumbersAndWierdSymbols`.
-
-        Authentication tokes are JWTs which are cryptographically secured and contain a bit of information to identify user at the back-end.
 
   responses:
     badRequest:

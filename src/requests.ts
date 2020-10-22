@@ -10,6 +10,7 @@ import {
     WeeklyRepetition,
     DailyRepetition,
     MonthlyRepetition,
+    JWT,
 } from "./common"
 
 export interface Login {
@@ -18,6 +19,10 @@ export interface Login {
      * @format password
      */
     password: string
+}
+
+export interface RefreshTokens {
+    refresh_token: JWT;
 }
 
 export interface Register extends NamedEntity {

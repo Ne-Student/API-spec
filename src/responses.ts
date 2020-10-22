@@ -1,12 +1,15 @@
 import { Payload, Lesson, JWT, Teacher } from "./common"
 
 export type TokenResponse = {
-    access_token: JWT
+    access_token: JWT,
+    refresh_token: JWT,
 }
 
 export type Login = Payload<TokenResponse>
 
 export type Register = Login
+
+export type Refresh = Login
 
 export type GetLesson = Payload<Lesson>
 
